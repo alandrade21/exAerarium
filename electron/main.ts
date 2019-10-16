@@ -2,10 +2,11 @@ import { app } from 'electron';
 
 import { InitializationController } from './initialization/InitializationController';
 import { DEV_CONFIG_FOLDER_PATH } from './constants';
-import { MainWindowController, envDetector } from '@alandrade21/electron-arch';
+import { MainWindowController, envDetector, ErrorWrapper } from '@alandrade21/electron-arch';
 
-try {
-  app.on('ready', () => {
+app.on('ready', () => {
+
+  try {
 
     // envDetector.printEnvironment();
 
@@ -13,19 +14,19 @@ try {
     MainWindowController.initialize();
 
     // Do the app initialization.
-    try {
-      const initController = new InitializationController('ExHeroics', DEV_CONFIG_FOLDER_PATH);
-      initController.doConfig();
-    } catch (error) {
-      app.quit();
-      return;
-    }
+    const initController = new InitializationController('ExAerarium', DEV_CONFIG_FOLDER_PATH);
+    initController.doConfig();
 
     if (MainWindowController.mainWindow) {
       MainWindowController.mainWindow.show();
     }
-  });
-} catch (e) {
-  console.log(e);
-  app.quit();
-}
+  } catch (e) {
+    if (e instanceof ErrorWrapper) {
+      (<ErrorWrapper>e).consoleLog();
+    } else {
+      console.log(e);
+    }
+
+    app.quit();
+  }
+});

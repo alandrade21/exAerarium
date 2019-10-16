@@ -12,7 +12,7 @@
       "stopOnEntry": false,
       "args": ["."],
       "cwd": "${workspaceRoot}/dist/electron-out-tsc",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
       "runtimeArgs": [
           "--enable-logging"
       ],
@@ -22,8 +22,7 @@
         "${workspaceRoot}/dist/**/*.js"
       ],
       "internalConsoleOptions": "openOnSessionStart",
-      "console": "integratedTerminal",
-      "preLaunchTask": "build"
+      "console": "integratedTerminal"
     }
   ]
 }
